@@ -48,6 +48,20 @@ npm run package
 
 JavaScript, Electron, Node.js, HTML, CSS, Chromium, Electron Builder, PowerShell, OpenAI Codex, and GPT-5.6.
 
+## How Codex and GPT-5.6 were used
+
+I used OpenAI Codex and GPT-5.6 throughout development as engineering collaborators. They helped me:
+
+- Inspect and restructure the original codebase.
+- Design the Electron profile and isolated-session architecture.
+- Implement 100 coherent environment presets with stable user-agent settings.
+- Diagnose profile lifecycle, form-state, and browser navigation bugs.
+- Build automated syntax, integration, regression, and visual tests.
+- Improve the user interface and create the application icon and project media.
+- Package the Windows installer and prepare the GitHub release.
+
+All generated changes were reviewed and verified through complete user workflows. Codex was used iteratively: I provided requirements and bug reports, inspected the results, ran tests, and refined the implementation until the application behaved consistently.
+
 ## Responsible use
 
 This project is intended for privacy-conscious productivity and authorized browser testing. It is not intended for fraud, bypassing platform protections, or other abusive activity. Users are responsible for complying with applicable laws and website terms.
