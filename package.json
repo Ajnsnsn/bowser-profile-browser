@@ -1,0 +1,59 @@
+{
+  "name": "bowser-profile-browser",
+  "version": "1.6.0",
+  "description": "Desktop browser dengan profil dan sesi yang terisolasi",
+  "type": "module",
+  "main": "electron/main.js",
+  "author": "Bowser",
+  "license": "MIT",
+  "scripts": {
+    "icon": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/generate-icon.ps1",
+    "start": "electron .",
+    "test:syntax": "node --check electron/main.js && node --check electron/preload.cjs && node --check electron/browser-preload.cjs && node --check electron/profile-store.js && node --check electron/fingerprint.js && node --check electron/user-agent-store.js && node --check src/gui/renderer.js && node --check src/gui/browser-shell.js",
+    "test:smoke": "electron . --smoke-test",
+    "test:visual": "electron . --screenshot-test",
+    "test:integration": "electron . --integration-test",
+    "package": "electron-builder --win nsis --x64",
+    "package:dir": "electron-builder --win dir --x64"
+  },
+  "devDependencies": {
+    "electron": "43.1.1",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "id.bowser.profilebrowser",
+    "productName": "Bowser Profile Browser",
+    "artifactName": "Bowser-Profile-Browser-Installer-${version}.${ext}",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "src/gui/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "oneClick": true,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": false,
+      "differentialPackage": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Bowser Profile Browser"
+    }
+  }
+}

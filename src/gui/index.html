@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <title>Bowser Profile Browser</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div>
+            <strong>Bowser</strong>
+            <small>Secure Profile Browser</small>
+          </div>
+        </div>
+
+        <div class="sidebar-edition">
+          <span>PRO</span>
+          <div><strong>100 preset aktif</strong><small>Fingerprint catalog</small></div>
+        </div>
+
+        <nav class="nav" aria-label="Navigasi utama">
+          <p class="nav-label">WORKSPACE</p>
+          <button class="nav-item active" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6v-9h-6v9Zm0-16v5h6V4h-6Z"/></svg>
+            Profil browser
+          </button>
+          <button class="nav-item" id="open-data-folder" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2Z"/></svg>
+            Folder data
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <div class="shield-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5.05 3.41 9.76 8 11 4.59-1.24 8-5.95 8-11V5l-8-3Zm0 17.9c-3.2-1.08-5.7-4.83-5.7-8.9V6.56L12 4.42v15.48Z"/></svg>
+          </div>
+          <strong>Sesi terisolasi</strong>
+          <p>Cookie, cache, dan penyimpanan setiap profil dipisahkan secara otomatis.</p>
+        </div>
+
+        <div class="sidebar-footer">
+          <span class="status-dot"></span>
+          <span>Siap digunakan</span>
+          <small id="version-label">v1.0.0</small>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow"><span></span> CONTROL CENTER</p>
+            <h1>Profil browser</h1>
+            <p class="subtitle">Kelola identitas digital, sesi, dan fingerprint dari satu workspace.</p>
+          </div>
+          <div class="header-actions">
+            <div class="catalog-badge">
+              <div class="catalog-orb"><span></span></div>
+              <div><strong>100 preset</strong><small>Siap digunakan</small></div>
+            </div>
+            <button class="button primary" id="create-profile" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2Z"/></svg>
+              Profil baru
+            </button>
+          </div>
+        </header>
+
+        <section class="stats" aria-label="Ringkasan">
+          <article class="stat-card">
+            <div class="stat-icon violet"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z"/></svg></div>
+            <div><span>Total profil</span><strong id="total-count">0</strong></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-icon green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg></div>
+            <div><span>Sedang berjalan</span><strong id="running-count">0</strong></div>
+          </article>
+          <article class="stat-card wide">
+            <div class="stat-icon blue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7h-4V3H7v4H3v6h4v4h6v4h6v-6h2V9h-4V7Zm-6 8H9v-4H5V9h4V5h2v4h4v2h-4v4Zm8-2h-4v4h-2v-4h-2v-2h2V9h2v2h4v2Z"/></svg></div>
+            <div><span>Penyimpanan</span><strong>Sesi persisten</strong><small>Data tetap tersimpan setelah aplikasi ditutup</small></div>
+          </article>
+        </section>
+
+        <section class="profiles-section">
+          <div class="section-toolbar">
+            <div>
+              <h2>Semua profil</h2>
+              <p id="profile-summary">Belum ada profil</p>
+            </div>
+            <label class="search-box">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3a6.5 6.5 0 1 0 3.98 11.64L19.85 21 21 19.85l-6.36-6.37A6.5 6.5 0 0 0 9.5 3Zm0 2a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z"/></svg>
+              <input id="search-input" type="search" placeholder="Cari profil..." autocomplete="off">
+            </label>
+          </div>
+          <div class="profile-grid" id="profile-grid" aria-live="polite">
+            <div class="loading-state"><span class="spinner"></span>Memuat profil...</div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="profile-dialog" id="profile-dialog">
+      <form method="dialog" id="profile-form">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">KONFIGURASI</p>
+            <h2 id="dialog-title">Buat profil baru</h2>
+          </div>
+          <button class="icon-button" id="close-dialog" type="button" aria-label="Tutup">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m18.3 5.71-1.41-1.42L12 9.17 7.11 4.29 5.7 5.71 10.59 10.6 5.7 15.49l1.41 1.42L12 12.01l4.89 4.9 1.41-1.42-4.89-4.89 4.89-4.89Z"/></svg>
+          </button>
+        </div>
+
+        <div class="dialog-body">
+          <input id="profile-id" type="hidden">
+          <div class="form-section">
+            <h3>Informasi dasar</h3>
+            <div class="form-grid two-columns">
+              <label class="field">
+                <span>Nama profil</span>
+                <input id="profile-name" type="text" maxlength="80" placeholder="Contoh: Profil kerja" required>
+              </label>
+              <label class="field">
+                <span>URL awal</span>
+                <input id="start-url" type="text" maxlength="2048" value="https://www.google.com" required>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-section fingerprint-section">
+            <div class="section-heading-inline">
+              <h3>Fingerprint perangkat</h3>
+              <span class="fingerprint-token">ID <code id="fingerprint-id-label">baru</code></span>
+            </div>
+            <input id="fingerprint-seed" type="hidden">
+            <div class="fingerprint-picker">
+              <label class="field fingerprint-search-field">
+                <span>Cari preset</span>
+                <input id="fingerprint-search" type="search" placeholder="Laptop, Android, NVIDIA..." autocomplete="off">
+              </label>
+              <label class="field">
+                <span>Preset perangkat <em>100 pilihan</em></span>
+                <select id="fingerprint-preset">
+                  <option value="windows_laptop">Memuat katalog preset...</option>
+                </select>
+              </label>
+              <button class="button fingerprint-randomize" id="randomize-fingerprint" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.65 6.35A7.95 7.95 0 0 0 12 4c-4.09 0-7.19 3.72-6.39 7.69l-2.08.68C2.3 7.04 6.34 2 12 2c2.76 0 5.26 1.12 7.07 2.93L22 2v8h-8l3.65-3.65ZM6.35 17.65A7.95 7.95 0 0 0 12 20c4.09 0 7.19-3.72 6.39-7.69l2.08-.68C21.7 16.96 17.66 22 12 22a9.96 9.96 0 0 1-7.07-2.93L2 22v-8h8l-3.65 3.65Z"/></svg>
+                Acak fingerprint
+              </button>
+            </div>
+            <div class="fingerprint-summary">
+              <div><span>Platform</span><strong id="fp-platform">Win32</strong></div>
+              <div><span>CPU / RAM</span><strong id="fp-hardware">8 core · 8 GB</strong></div>
+              <div><span>GPU</span><strong id="fp-gpu">Intel Iris Xe</strong></div>
+            </div>
+            <p class="fingerprint-help">Klik acak untuk menghasilkan canvas seed baru. Fingerprint dan User-Agent preset disimpan di profil sehingga tidak berubah saat profil dibuka kembali atau aplikasi di-update.</p>
+          </div>
+
+          <div class="form-section">
+            <h3>Identitas browser</h3>
+            <div class="form-grid three-columns">
+              <label class="field">
+                <span>Bahasa</span>
+                <select id="locale">
+                  <option value="id-ID">Indonesia (id-ID)</option>
+                  <option value="en-US">English US (en-US)</option>
+                  <option value="en-GB">English UK (en-GB)</option>
+                  <option value="ms-MY">Melayu (ms-MY)</option>
+                  <option value="ja-JP">Japanese (ja-JP)</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Zona waktu</span>
+                <select id="timezone">
+                  <option value="Asia/Jakarta">Asia/Jakarta</option>
+                  <option value="Asia/Makassar">Asia/Makassar</option>
+                  <option value="Asia/Jayapura">Asia/Jayapura</option>
+                  <option value="Asia/Singapore">Asia/Singapore</option>
+                  <option value="America/New_York">America/New_York</option>
+                  <option value="Europe/London">Europe/London</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Resolusi</span>
+                <select id="resolution">
+                  <option value="1366x768">1366 × 768</option>
+                  <option value="1920x1080">1920 × 1080</option>
+                  <option value="1536x864">1536 × 864</option>
+                  <option value="1440x900">1440 × 900</option>
+                  <option value="1280x720">1280 × 720</option>
+                  <option value="412x915">412 × 915</option>
+                </select>
+              </label>
+            </div>
+            <div class="user-agent-library full-width">
+              <label class="field">
+                <span>Pilih User-Agent dari file</span>
+                <select id="user-agent-library">
+                  <option value="">Belum ada daftar yang diimpor</option>
+                </select>
+              </label>
+              <button class="button ua-import" id="import-user-agents" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7ZM5 18v2h14v-2H5Z"/></svg>
+                Import file
+              </button>
+              <button class="icon-button ua-clear" id="clear-user-agents" type="button" title="Hapus daftar User-Agent" aria-label="Hapus daftar User-Agent">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12ZM8 9h8v10H8V9Zm7.5-5-1-1h-5l-1 1H5v2h14V4h-3.5Z"/></svg>
+              </button>
+            </div>
+            <label class="field full-width">
+              <span>User-Agent kustom <em>opsional</em></span>
+              <textarea id="user-agent" rows="2" maxlength="1000" placeholder="Kosongkan untuk memakai User-Agent bawaan aplikasi"></textarea>
+              <small>Mendukung TXT satu User-Agent per baris, CSV, JSON, dan JSONL. Pilihan dari file tetap dapat diedit manual.</small>
+            </label>
+          </div>
+
+          <div class="form-section">
+            <div class="section-heading-inline">
+              <h3>Proxy <span class="optional">Opsional</span></h3>
+              <span class="secure-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8h-1V6a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V6Zm3 11h-2v-4h2v4Z"/></svg>Terenkripsi di perangkat</span>
+            </div>
+            <div class="form-grid proxy-grid">
+              <label class="field proxy-address">
+                <span>Alamat proxy</span>
+                <input id="proxy-url" type="text" maxlength="500" placeholder="http://127.0.0.1:8080">
+              </label>
+              <label class="field">
+                <span>Username</span>
+                <input id="proxy-username" type="text" maxlength="200" autocomplete="off" placeholder="Opsional">
+              </label>
+              <label class="field">
+                <span>Password</span>
+                <input id="proxy-password" type="password" autocomplete="new-password" placeholder="Opsional">
+              </label>
+            </div>
+            <label class="checkbox-row" id="clear-password-row">
+              <input id="clear-password" type="checkbox">
+              <span>Hapus password proxy yang tersimpan</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="dialog-footer">
+          <button class="button secondary" id="cancel-dialog" type="button">Batal</button>
+          <button class="button primary" id="save-profile" type="submit">
+            <span class="button-label">Simpan profil</span>
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="assertive"></div>
+    <script src="./renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+BOWSER PROFILE BROWSER 1.6.0
+============================
+
+INSTALASI BARU DI PC WINDOWS LAIN
+1. Ekstrak file ZIP ini.
+2. Buka folder antidetect\dist.
+3. Jalankan Bowser-Profile-Browser-Installer-1.6.0.exe.
+4. Jika SmartScreen muncul, pilih More info lalu Run anyway.
+
+UPDATE VERSI LAMA
+1. Tutup Bowser Profile Browser.
+2. Jalankan installer yang sama.
+3. Update dilakukan otomatis tanpa uninstall; profil dan data tetap tersimpan.
+
+SOURCE CODE
+Dependency node_modules tidak disertakan. Untuk build ulang, ikuti bagian
+"Build ulang" di README-GUI.md.
